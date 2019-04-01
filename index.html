@@ -15,41 +15,89 @@
 
 </head>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-  <a class="navbar-brand" href="#">Giftastic</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<!-- ************************************************************************* -->
+<!-- <nav class="navbar navbar-light bg-secondary">
+  <a class="navbar-brand font-weight-bolder">
+    <img src="https://media1.giphy.com/media/9J6P7n1DmLba2su3r9/100w.gif" alt="JS">
+    Giftastic
+  </a>
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</nav> -->
+<!-- ************************************************************************* -->
+
+
+<nav class="navbar navbar-expand-sm navbar-light bg-secondary">
+
+
+  <a class="navbar-brand font-weight-bolder" href="#">
+    <img src="https://media1.giphy.com/media/9J6P7n1DmLba2su3r9/100w.gif" alt="JS">
+    Giftastic
+  </a>
+
+
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".multi-collapse"
+    aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
+  <div class="collapse navbar-collapse multi-collapse" id="navbarTogglerDemo02">
+    <div class="mr-auto"></div>
     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <input class="form-control mr-sm-2" type="search" placeholder="Search">
+      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
     </form>
-
   </div>
+
 
 </nav>
 
 
 
+
+
 <body>
   <!-- Container to hold the Buttons -->
-  <div id="bt-container" class="row m-3">
-    <button class="btn btn-primary mx-2">button</button>
-    <button class="btn btn-primary mx-2">button</button>
-    <button class="btn btn-primary mx-2">button</button>
-    <!-- Buttons will be added dynamicly from javascript -->
+  <div class="row m-3">
+
+      <div id="btnContainer" class="">
+          <!-- Buttons will be added dynamicly from javascript -->
+        </div>
+
+
   </div>
+  
+
+
+
   <!-- Row do hold the column with images and input/button search -->
   <div class="row mx-2">
-    <div class="col-sm-9 bg-info">
-      <h1>test</h1>
-    </div>
-    <div class="col-sm-3 bg-primary">
-      <h1>test</h1>
+    <div id="imgsContainer" class="col bg-info">
+      <!-- <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt="">
+      <img class="m-1" src="https://media1.giphy.com/media/9OTWgv2kiPoiY/200w.gif" alt=""> -->
     </div>
 
   </div>
