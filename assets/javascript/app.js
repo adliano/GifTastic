@@ -1,4 +1,3 @@
-
 // Data Set with initial animals, Set used to void repetitive input
 let animalsSet = new Set(["cow", "dog", "cat", "rat", "horse", "monkey", "bat"]);
 // API Key
@@ -30,25 +29,83 @@ function mkbtn(textContent) {
     return _btn;
 }
 /* ************************************************************* */
-/* * * * * * * * * * * * * * mkImg() * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * mkImgCard() * * * * * * * * * * * * * */
 /* ************************************************************* */
 // function to create a new img element
-function mkImg(animalImgObj, alt) {
-    // Create new img element
-    let _img = document.createElement("img");
-    // Add Bootstrap class to style it
-    _img.setAttribute('class', 'm-1');
-    // 
-    _img.setAttribute('data-rating', animalImgObj.rating);
+/**
+ * 
+<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-7 p-1">
+    <div class="card p-1">
+        <h4 class="card-title text-center p-2 mx-2  bg-primary text-light">Rating</h4>
+        <img class="px-1 m-1" src="https://media2.giphy.com/media/dchERAZ73GvOE/200_s.gif" alt="Chewbacca">
+    </div>
+</div>
+ * 
+ */
+function mkImgCard(animalImgObj, alt) {
+    let _col = document.createElement('div');
+    _col.setAttribute('class','col-xl-2 col-lg-3 col-md-4 col-sm-6 col-7 p-1');
+    // create card div
+    let _cardDiv = document.createElement("div");
+    // Add the clases to cardDiv
+    _cardDiv.setAttribute('class','card p-1');
+    
+    let _innerHTMLText = `<h4 class="card-title text-center p-2 mx-2  bg-primary text-light">${animalImgObj.rating}</h4>`;
     animalImgObj = animalImgObj.images;
-    _img.setAttribute('src', animalImgObj.fixed_height_still.url);
-    _img.setAttribute('data-gif', animalImgObj.fixed_height.url);
-    _img.setAttribute('alt', alt);
+    _innerHTMLText += `<img class="px-1 m-1" src="${animalImgObj.fixed_height_still.url}" alt="${alt}" data-state="still">`;
+    _cardDiv.innerHTML = _innerHTMLText;
 
-    return _img;
+    _col.appendChild(_cardDiv);
+
+    return _col;
+
+    /*
+    <img
+        src="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif"
+        data-still="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif"
+        data-animate="https://media3.giphy.com/media/W6LbnBigDe4ZG/200.gif"
+        data-state="still"
+        class="gif"
+      />
+
+      if (event.target.tagName === 'img'.toUpperCase()) {
+            let currentImg = event.target
+            var state = currentImg.dataset.state
+            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+            // Then, set the image's data-state to animate
+            // Else set src to the data-still value
+            if (state === 'still') {
+              currentImg.setAttribute('src', currentImg.dataset.animate)
+              currentImg.setAttribute('data-state', 'animate')
+            } else {
+              currentImg.setAttribute('src', currentImg.dataset.still)
+              currentImg.setAttributegh('data-state', 'still')
+            }
+          }
+    */
+
+    // // create crad header
+    // let _cardHeader = document.createElement("h4");
+    // // Add the clases to cardHeader
+    // _cardHeader.setAttribute('class','card-header text-center p-1');/////////
+    // // Create new img element
+    // let _img = document.createElement("img");
+    // // Add Bootstrap class to style it
+    // _img.setAttribute('class', 'm-1');
+    // // 
+    // _img.setAttribute('data-rating', animalImgObj.rating);
+    // animalImgObj = animalImgObj.images;
+    // _img.setAttribute('src', animalImgObj.fixed_height_still.url);
+    // _img.setAttribute('data-gif', animalImgObj.fixed_height.url);
+    // _img.setAttribute('alt', alt);
+
+    // return _img;
+
+
+    
 }
 /* ************************************************************* */
-/* * * * * * * * * * * * * * mkImg() * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * mkImgCard() * * * * * * * * * * * * * * */
 /* ************************************************************* */
 function loadImages(search) {
     // remove whitespaces from search string using regex
@@ -67,7 +124,7 @@ function loadImages(search) {
                 // loop the obj and create a img for each key
                 for (let _key of Object.keys(_dataObj)) {
                     console.dir(_dataObj[_key]);
-                    _parent.append(mkImg(_dataObj[_key], search));
+                    _parent.append(mkImgCard(_dataObj[_key], search));
                 }
             });
     }
@@ -86,8 +143,8 @@ function onButtonClick(event) {
 /* =============================================================== */
 /*                     Image Event listener                        */
 /* =============================================================== */
-function onImageClick(event){
-    if(event.target.tagName == 'IMG'){
+function onImageClick(event) {
+    if (event.target.tagName == 'IMG') {
         alert("works");
     }
 }
@@ -105,8 +162,7 @@ function onAddAnimalClick(event) {
         animalsSet.add(_inputElement.value);
         reloadButtons();
         //document.querySelector("#btnContainer").appendChild(mkbtn(_animal));
-    }
-    else {
+    } else {
         console.log("Nothing!");
     }
 }
@@ -116,3 +172,15 @@ reloadButtons();
 document.querySelector("#btnContainer").addEventListener('click', onButtonClick);
 document.querySelector('#imgsContainer').addEventListener('click', onImageClick);
 document.querySelector("#btnAddAnimal").addEventListener('click', onAddAnimalClick);
+
+
+
+
+/**
+ * 
+ <div class="card border-light mb-3" >
+     <div class="card-header text-center p-1">Header</div>
+     <img class="mx-auto p-1" src="https://media2.giphy.com/media/dchERAZ73GvOE/200_s.gif" alt="">
+</div>
+ * 
+ */
