@@ -1,18 +1,16 @@
 
 // Data Set with initial animals, Set used to void repetitive input
 let animalsSet = new Set(["cow", "dog", "cat", "rat", "horse", "monkey", "bat"]);
-
+// API Key
 const API_KEY = "GvtvtZwH7qHmYmA0qVRIs8mOOul36if";
-
-
-
-console.dir(animalsSet);
 
 /* ************************************************************* */
 /* * * * * * * * * * * * reloadButtons() * * * * * * * * * * * * */
 /* ************************************************************* */
 function reloadButtons() {
+    // Clean Screen
     document.querySelector("#btnContainer").innerHTML = "";
+    // Loop trough Set and add Buttons
     for (let animal of animalsSet) {
         document.querySelector("#btnContainer").appendChild(mkbtn(animal));
     }
@@ -43,8 +41,8 @@ function mkImg(animalImgObj, alt) {
     // 
     _img.setAttribute('data-rating', animalImgObj.rating);
     animalImgObj = animalImgObj.images;
-    _img.setAttribute('src', animalImgObj.fixed_width_still.url);
-    _img.setAttribute('data-gif', animalImgObj.fixed_width.url);
+    _img.setAttribute('src', animalImgObj.fixed_height_still.url);
+    _img.setAttribute('data-gif', animalImgObj.fixed_height.url);
     _img.setAttribute('alt', alt);
 
     return _img;
@@ -66,8 +64,6 @@ function loadImages(search) {
             .then((_response) => _response.json())
             .then((_jsonObj) => _jsonObj.data)
             .then((_dataObj) => {
-                /////// DEBUG \\\\\\\
-                console.dir(_dataObj);
                 // loop the obj and create a img for each key
                 for (let _key of Object.keys(_dataObj)) {
                     console.dir(_dataObj[_key]);
@@ -85,8 +81,17 @@ function onButtonClick(event) {
     // get the animal's name of clicked button
     let _animal = event.target.innerHTML;
     loadImages(_animal);
-
 }
+
+/* =============================================================== */
+/*                     Image Event listener                        */
+/* =============================================================== */
+function onImageClick(event){
+    if(event.target.tagName == 'IMG'){
+        alert("works");
+    }
+}
+
 /* =============================================================== */
 /*                Add Animal Buttons Event listener                */
 /* =============================================================== */
@@ -105,13 +110,9 @@ function onAddAnimalClick(event) {
         console.log("Nothing!");
     }
 }
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 reloadButtons();
-
-
-
 document.querySelector("#btnContainer").addEventListener('click', onButtonClick);
+document.querySelector('#imgsContainer').addEventListener('click', onImageClick);
 document.querySelector("#btnAddAnimal").addEventListener('click', onAddAnimalClick);
