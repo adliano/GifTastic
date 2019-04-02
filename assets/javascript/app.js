@@ -32,16 +32,6 @@ function mkbtn(textContent) {
 /* * * * * * * * * * * * * mkImgCard() * * * * * * * * * * * * * */
 /* ************************************************************* */
 // function to create a new img element
-/**
- *
-<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-7 p-1">
-    <div class="card p-1">
-        <h4 class="card-title text-center p-2 mx-2  bg-primary text-light">Rating</h4>
-        <img class="px-1 m-1" src="https://media2.giphy.com/media/dchERAZ73GvOE/200_s.gif" alt="Chewbacca">
-    </div>
-</div>
- *
- */
 function mkImgCard(animalImgObj, alt) {
   let _col = document.createElement('div');
   _col.setAttribute('class', 'col-xl-2 col-lg-3 col-md-4 col-sm-6 col-7 p-1');
@@ -52,7 +42,7 @@ function mkImgCard(animalImgObj, alt) {
   // Create Card Title <H4>
   let _cardTitle = document.createElement('h4');
   // Add classes for crad title
-  _cardTitle.setAttribute('class','card-title text-center p-2 mx-2  bg-primary text-light');
+  _cardTitle.setAttribute('class', 'card-title text-center p-2 mx-2  bg-primary text-light');
   // Add innerHTML for card Title (Rating)
   _cardTitle.innerHTML = animalImgObj.rating;
   // Get the imgages Object
@@ -60,73 +50,28 @@ function mkImgCard(animalImgObj, alt) {
   // Create <img>
   let _img = document.createElement('img');
   // Add the Attributes
-  _img.setAttribute('src',animalImgObj.fixed_height_still.url);
-  _img.setAttribute('data-still',animalImgObj.fixed_height_still.url);
-  _img.setAttribute('data-animate',animalImgObj.fixed_height.url);
-  _img.setAttribute('data-state','still');
-  _img.setAttribute('class','px-1 m-1');
+  // _img.setAttribute('src', animalImgObj.fixed_height_still.url);
+  // _img.setAttribute('data-still', animalImgObj.fixed_height_still.url);
+  // _img.setAttribute('data-animate', animalImgObj.fixed_height.url);
+  // _img.setAttribute('data-state', 'still');
+  // _img.setAttribute('class', 'px-1 m-1');
+  // Add the Attributes
+  _img.src = animalImgObj.fixed_height_still.url;
+  _img.dataset.still = animalImgObj.fixed_height_still.url;
+  _img.dataset.animate = animalImgObj.fixed_height.url;
+  _img.dataset.state = 'still';
+  _img.classList = 'px-1 m-1';
+  _img.alt = alt;
   // Append _cardTitle and _img to _card
   _card.append(_cardTitle);
   _card.append(_img);
   // Append _card to _col
   _col.append(_card);
 
-//  let _innerHTMLText = `<h4 class="card-title text-center p-2 mx-2  bg-primary text-light">${animalImgObj.rating}</h4>`;
-//  animalImgObj = animalImgObj.images;
-//  _innerHTMLText += `<img class="px-1 m-1" src="${animalImgObj.fixed_height_still.url}" alt="${alt}" data-state="still">`;
-//  _card.innerHTML = _innerHTMLText;
-
-  // _col.appendChild(_card);
-
   return _col;
-
-  /*
-  <img
-      src="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif"
-      data-still="https://media3.giphy.com/media/W6LbnBigDe4ZG/200_s.gif"
-      data-animate="https://media3.giphy.com/media/W6LbnBigDe4ZG/200.gif"
-      data-state="still"
-      class="gif"
-    />
-
-    if (event.target.tagName === 'img'.toUpperCase()) {
-          let currentImg = event.target
-          var state = currentImg.dataset.state
-          // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-          // Then, set the image's data-state to animate
-          // Else set src to the data-still value
-          if (state === 'still') {
-            currentImg.setAttribute('src', currentImg.dataset.animate)
-            currentImg.setAttribute('data-state', 'animate')
-          } else {
-            currentImg.setAttribute('src', currentImg.dataset.still)
-            currentImg.setAttributegh('data-state', 'still')
-          }
-        }
-  */
-
-  // // create crad header
-  // let _cardHeader = document.createElement("h4");
-  // // Add the clases to cardHeader
-  // _cardHeader.setAttribute('class','card-header text-center p-1');/////////
-  // // Create new img element
-  // let _img = document.createElement("img");
-  // // Add Bootstrap class to style it
-  // _img.setAttribute('class', 'm-1');
-  // //
-  // _img.setAttribute('data-rating', animalImgObj.rating);
-  // animalImgObj = animalImgObj.images;
-  // _img.setAttribute('src', animalImgObj.fixed_height_still.url);
-  // _img.setAttribute('data-gif', animalImgObj.fixed_height.url);
-  // _img.setAttribute('alt', alt);
-
-  // return _img;
-
-
-
 }
 /* ************************************************************* */
-/* * * * * * * * * * * * * * mkImgCard() * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * mkImgCard() * * * * * * * * * * * * */
 /* ************************************************************* */
 function loadImages(search) {
   // remove whitespaces from search string using regex
@@ -139,13 +84,17 @@ function loadImages(search) {
   if (window.fetch) {
     // send request
     fetch(_URL)
+      // Parse the resonse
       .then((_response) => _response.json())
+      // Get the Data object from API
       .then((_jsonObj) => _jsonObj.data)
       .then((_dataObj) => {
         // loop the obj and create a img for each key
         for (let _key of Object.keys(_dataObj)) {
-          console.dir(_dataObj[_key]);
-          _parent.append(mkImgCard(_dataObj[_key], search));
+          // Create a new card with the current obj
+          let _newCard = mkImgCard(_dataObj[_key]);
+          // add current card to parrent
+          _parent.append(_newCard, search);
         }
       });
   }
@@ -153,47 +102,60 @@ function loadImages(search) {
 /* =============================================================== */
 /*                   Buttons Event listener                        */
 /* =============================================================== */
+// this will add images cards to view
 function onButtonClick(event) {
   // Clear any <img> available at the parent element
   document.querySelector("#imgsContainer").innerHTML = "";
   // get the animal's name of clicked button
   let _animal = event.target.innerHTML;
+  // add images to view
   loadImages(_animal);
 }
-
 /* =============================================================== */
 /*                     Image Event listener                        */
 /* =============================================================== */
+// this will toggle the animation on image
 function onImageClick(event) {
-
+  // check if user clicked on image
   if (event.target.tagName === 'IMG') {
+    // get clicked image
     let _currentImg = event.target;
-    if(_currentImg.dataset.state === 'still'){
+    // check state of image/gif
+    // if current state is still 
+    if (_currentImg.dataset.state === 'still') {
+      // set it to animate 
       _currentImg.src = _currentImg.dataset.animate;
+      // and set gif url
       _currentImg.dataset.state = 'animate';
     }
-    else{
+    // else (if current state is animate)
+    else {
+      // set it to still
       _currentImg.src = _currentImg.dataset.still;
+      // and set img url
       _currentImg.dataset.state = 'still';
     }
   }
 }
-
 /* =============================================================== */
 /*                Add Animal Buttons Event listener                */
 /* =============================================================== */
+// this will add the text input to button
 function onAddAnimalClick(event) {
+  // prevent page to reflesh
   event.preventDefault();
   // get input element
   let _inputElement = document.querySelector('#getAnimalName');
   // Check if user input any data
   if (_inputElement.value) {
-    console.log(_inputElement.value);
+    // add animal name to animalsSet
     animalsSet.add(_inputElement.value);
+    // reload buttons
     reloadButtons();
-    //document.querySelector("#btnContainer").appendChild(mkbtn(_animal));
-  } else {
-    console.log("Nothing!");
+  }
+  else {
+    // display error if input not available
+    alert("Missing Input");
   }
 }
 //////////////////////////////////////////////////////////////////////////////////
@@ -203,14 +165,3 @@ document.querySelector("#btnContainer").addEventListener('click', onButtonClick)
 document.querySelector('#imgsContainer').addEventListener('click', onImageClick);
 document.querySelector("#btnAddAnimal").addEventListener('click', onAddAnimalClick);
 
-
-
-
-/**
- *
- <div class="card border-light mb-3" >
-     <div class="card-header text-center p-1">Header</div>
-     <img class="mx-auto p-1" src="https://media2.giphy.com/media/dchERAZ73GvOE/200_s.gif" alt="">
-</div>
- *
- */
