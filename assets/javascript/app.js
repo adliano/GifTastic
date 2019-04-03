@@ -50,23 +50,17 @@ function mkImgCard(animalImgObj, alt) {
   // Create <img>
   let _img = document.createElement('img');
   // Add the Attributes
-  // _img.setAttribute('src', animalImgObj.fixed_height_still.url);
-  // _img.setAttribute('data-still', animalImgObj.fixed_height_still.url);
-  // _img.setAttribute('data-animate', animalImgObj.fixed_height.url);
-  // _img.setAttribute('data-state', 'still');
-  // _img.setAttribute('class', 'px-1 m-1');
-  // Add the Attributes
-  _img.src = animalImgObj.fixed_height_still.url;
-  _img.dataset.still = animalImgObj.fixed_height_still.url;
-  _img.dataset.animate = animalImgObj.fixed_height.url;
-  _img.dataset.state = 'still';
-  _img.classList = 'px-1 m-1';
-  _img.alt = alt;
+  _img.setAttribute('src', animalImgObj.fixed_height_still.url);
+  _img.setAttribute('data-still', animalImgObj.fixed_height_still.url);
+  _img.setAttribute('data-animate', animalImgObj.fixed_height.url);
+  _img.setAttribute('data-state', 'still');
+  _img.setAttribute('class', 'px-1 m-1');
+  _img.setAttribute('alt', alt);
   // Append _cardTitle and _img to _card
-  _card.append(_cardTitle);
-  _card.append(_img);
+  _card.appendChild(_cardTitle);
+  _card.appendChild(_img);
   // Append _card to _col
-  _col.append(_card);
+  _col.appendChild(_card);
 
   return _col;
 }
@@ -92,9 +86,9 @@ function loadImages(search) {
         // loop the obj and create a img for each key
         for (let _key of Object.keys(_dataObj)) {
           // Create a new card with the current obj
-          let _newCard = mkImgCard(_dataObj[_key]);
+          let _newCard = mkImgCard(_dataObj[_key], search);
           // add current card to parrent
-          _parent.append(_newCard, search);
+          _parent.append(_newCard);
         }
       });
   }
