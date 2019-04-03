@@ -2,6 +2,7 @@
 let animalsSet = new Set(["cow", "dog", "cat", "rat", "horse", "monkey", "bat"]);
 // API Key
 const API_KEY = "GvtvtZwH7qHmYmA0qVRIs8mOOul36if";
+const IMG_LIMIT = 1;
 
 /* ************************************************************* */
 /* * * * * * * * * * * * reloadButtons() * * * * * * * * * * * * */
@@ -17,7 +18,8 @@ function reloadButtons() {
 /* ************************************************************* */
 /* * * * * * * * * * * * * * mkbtn() * * * * * * * * * * * * * * */
 /* ************************************************************* */
-// function to create a new button
+// function to create a new button, the argument passed to this function will                                 
+// be the text displayed on button
 function mkbtn(textContent) {
   // create new element button
   let _btn = document.createElement("button");
@@ -31,7 +33,8 @@ function mkbtn(textContent) {
 /* ************************************************************* */
 /* * * * * * * * * * * * * mkImgCard() * * * * * * * * * * * * * */
 /* ************************************************************* */
-// function to create a new img element
+// function to create a new img element, the passed argument to this function                                      
+// will be the JSON data object from API and innerHTML from the button 
 function mkImgCard(animalImgObj, alt) {
   let _col = document.createElement('div');
   _col.setAttribute('class', 'col-xl-2 col-lg-3 col-md-4 col-sm-6 col-7 p-1');
@@ -63,59 +66,15 @@ function mkImgCard(animalImgObj, alt) {
   _col.appendChild(_card);
 
   return _col;
+
+  // loop the obj and create a img for each key TODO:
+  // for (let _key of Object.keys(animalImgObj)) {
+  //   // Create a new card with the current obj
+  //   let _newCard = mkImgCard(_dataObj[_key], search);
+  //   // add current card to parrent
+  //   _parent.append(_newCard);
+  // }
 }
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function test() {
-  var search = 'brasil';
-  let _URL = `http://api.giphy.com/v1/gifs/search?q=${search}&api_key=${API_KEY}d&limit=10&rating=pg13`;
-  // instanciate a XHR
-  const xhr = new XMLHttpRequest();
-  // Send the reuest
-  xhr.open('GET', _URL);
-  // onload event listener
-  xhr.onload = (event) => {
-    // If ready state its done
-    if (xhr.readyState === 4) {
-      // checks if the xhr has successfully retrieved data from the API
-      if (xhr.status === 200) {
-        let _response = JSON.parse(xhr.responseText);
-
-
-        console.log(_response.data);
-
-      }
-    }
-  }
-
-  xhr.send();
-}
-
-test();
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ************************************************************ */
 /* * * * * * * * * * * * * loadImages() * * * * * * * * * * * * */
 /* ************************************************************ */
@@ -123,11 +82,12 @@ function loadImages(search) {
   // remove whitespaces from search string using regex
   search = search.trim().split(/\s/).join('+');
   // API URL
-  let _URL = `http://api.giphy.com/v1/gifs/search?q=${search}&api_key=${API_KEY}d&limit=10&rating=pg13`;
+  let _URL = `http://api.giphy.com/v1/gifs/search?q=${search}&api_key=${API_KEY}d&limit=${IMG_LIMIT}&rating=pg13`;
   // Get the parent element
   let _parent = document.querySelector("#imgsContainer");
   // Check if fetch is available
-  if (window.fetch) {
+  //////////// ****************** TODO: added ! for testing with XMLHttpRequest ******************\\\\\\\\\\\\\
+  if (!window.fetch) {
     // send request
     fetch(_URL)
       // Parse the resonse
@@ -151,30 +111,28 @@ function loadImages(search) {
     // Send the reuest
     xhr.open('GET', _URL);
     // onload event listener
-    xhr.onload = (event) => {
+    xhr.onload = () => {
       // If ready state its done
       if (xhr.readyState === 4) {
         // checks if the xhr has successfully retrieved data from the API
         if (xhr.status === 200) {
           let _response = JSON.parse(xhr.responseText);
-          console.log(_response);
-
+          let _result = _response.data;
+          console.log(_result);
           // loop the obj and create a img for each key
-          for (let _key of Object.keys(_response.data)) {
+          for (let _key of Object.keys(_result)) {
             // Create a new card with the current obj
-            let _newCard = mkImgCard(_response.data[_key], search);
+            let _newCard = mkImgCard(_result[_key], search);
             // add current card to parrent
             _parent.append(_newCard);
           }
-
+        } else {
+          console.log("Error loadin data");
         }
-        else {
-          // TODO: implement error msg
-        }
-
       }
     };
-
+    //
+    xhr.send();
   }
 }
 /* =============================================================== */
@@ -230,8 +188,7 @@ function onAddAnimalClick(event) {
     animalsSet.add(_inputElement.value);
     // reload buttons
     reloadButtons();
-  }
-  else {
+  } else {
     // display error if input not available
     alert("Missing Input");
   }
@@ -242,4 +199,3 @@ reloadButtons();
 document.querySelector("#btnContainer").addEventListener('click', onButtonClick);
 document.querySelector('#imgsContainer').addEventListener('click', onImageClick);
 document.querySelector("#btnAddAnimal").addEventListener('click', onAddAnimalClick);
-
