@@ -64,9 +64,61 @@ function mkImgCard(animalImgObj, alt) {
 
   return _col;
 }
-/* ************************************************************* */
-/* * * * * * * * * * * * * * mkImgCard() * * * * * * * * * * * * */
-/* ************************************************************* */
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function test() {
+  var search = 'brasil';
+  let _URL = `http://api.giphy.com/v1/gifs/search?q=${search}&api_key=${API_KEY}d&limit=10&rating=pg13`;
+  // instanciate a XHR
+  const xhr = new XMLHttpRequest();
+  // Send the reuest
+  xhr.open('GET', _URL);
+  // onload event listener
+  xhr.onload = (event) => {
+    // If ready state its done
+    if (xhr.readyState === 4) {
+      // checks if the xhr has successfully retrieved data from the API
+      if (xhr.status === 200) {
+        let _response = JSON.parse(xhr.responseText);
+
+
+        console.log(_response.data);
+
+      }
+    }
+  }
+
+  xhr.send();
+}
+
+test();
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ************************************************************ */
+/* * * * * * * * * * * * * loadImages() * * * * * * * * * * * * */
+/* ************************************************************ */
 function loadImages(search) {
   // remove whitespaces from search string using regex
   search = search.trim().split(/\s/).join('+');
@@ -91,6 +143,38 @@ function loadImages(search) {
           _parent.append(_newCard);
         }
       });
+  }
+  // If Fetch not Available
+  else {
+    // instanciate a XHR
+    const xhr = new XMLHttpRequest();
+    // Send the reuest
+    xhr.open('GET', _URL);
+    // onload event listener
+    xhr.onload = (event) => {
+      // If ready state its done
+      if (xhr.readyState === 4) {
+        // checks if the xhr has successfully retrieved data from the API
+        if (xhr.status === 200) {
+          let _response = JSON.parse(xhr.responseText);
+          console.log(_response);
+
+          // loop the obj and create a img for each key
+          for (let _key of Object.keys(_response.data)) {
+            // Create a new card with the current obj
+            let _newCard = mkImgCard(_response.data[_key], search);
+            // add current card to parrent
+            _parent.append(_newCard);
+          }
+
+        }
+        else {
+          // TODO: implement error msg
+        }
+
+      }
+    };
+
   }
 }
 /* =============================================================== */
