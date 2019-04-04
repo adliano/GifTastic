@@ -2,7 +2,7 @@
 let animalsSet = new Set(["cow", "dog", "cat", "rat", "horse", "monkey", "bat"]);
 // JSOn to hold URL parameters
 let queryURL = {
-  url: "http://api.giphy.com/v1/gifs/search?",
+  url: "https://api.giphy.com/v1/gifs/search?",
   apiKey: "GvtvtZwH7qHmYmA0qVRIs8mOOul36if",
   limit: 10,
 };
