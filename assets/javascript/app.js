@@ -2,17 +2,21 @@
 let animalsSet = new Set(["cow", "dog", "cat", "rat", "horse", "monkey", "bat"]);
 // API Key
 const API_KEY = "GvtvtZwH7qHmYmA0qVRIs8mOOul36if";
+// Total of images to display
 const IMG_LIMIT = 1;
 
 /* ************************************************************* */
 /* * * * * * * * * * * * reloadButtons() * * * * * * * * * * * * */
 /* ************************************************************* */
+// This function will read each element from animalsSet and create a button
+// for each animal
 function reloadButtons() {
-  // Clean Screen
+  // Clean Screen to remove current buttons
   document.querySelector("#btnContainer").innerHTML = "";
-  // Loop trough Set and add Buttons
+  // Loop trough Set and add new Buttons
   for (let animal of animalsSet) {
-    document.querySelector("#btnContainer").appendChild(mkbtn(animal));
+    let _btn = mkbtn(animal);
+    document.querySelector("#btnContainer").appendChild(_btn);
   }
 }
 /* ************************************************************* */
